@@ -13,7 +13,7 @@ class Project1 extends Component {
             background: false, // Disable background playback if needed
         });
 
-        // Create custom play button
+        // Create custom play butto
         this.playButton = document.createElement('button');
         this.playButton.className = 'play-button';
         this.playButton.innerHTML = '<span class="play-icon"></span>';
