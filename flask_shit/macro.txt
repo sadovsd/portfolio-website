@@ -1,0 +1,89 @@
+/* CPI Project Rebuilt for Flask/React Portfolio */
+/* start: 06/09/2023 */
+/* author: Davyd Sadovskyy */
+
+/* %LET outputfile = "M:\sta402\final_project\final_project.rtf"; */
+%LET outputfile = "/Users/davydsadovskyy/react_udemy/portfolio2/flask_shit/cpi_trend.rtf";
+%LET start_year = 2001;
+%LET end_year = 2013;
+
+/* this is a hard coded consumer expense type, for now */
+data houses;
+	infile "M:\sta402\final_project\BLS-ConsumerPriceIndex\cu.data.12.USHousing.txt"
+	firstobs=2
+	expandtabs
+	pad;
+	input @1 series_id $17. @19 year @29 period $ @36 value; 
+run;
+
+/* read in the item documentation file */
+proc import datafile="M:\sta402\final_project\BLS-ConsumerPriceIndex\cu.item.txt"
+	out=item_docs (compress=char) replace /* replace option overwrites dataset
+	in case it already was created */
+	dbms=tab;
+	getnames=yes;
+run;
+
+/* read in the series documentation file */
+proc import datafile="M:\sta402\final_project\BLS-ConsumerPriceIndex\cu.series.txt"
+	out=series_docs (compress=char) replace
+	dbms=tab;
+	getnames=yes;
+run;
+
+/* find observations with item_codes corresponding to the specific expense type keyword 
+user wants */
+data item_docs_specific;
+	set item_docs;
+	/* loop through item_name to find observations that match with the expense type 
+	user wanted */
+	do n=1 to countw(item_name);
+	if count(lowcase(scan(item_name,n)), &expense_type_lower) > 0;
+	output;
+	end;
+	drop n;
+run;
+
+/* For purposes of this project, select the first item_code that corresponds to the 
+keyword user entered for expense type. */
+data item_docs_specific_first;
+	set item_docs_specific (obs=1);
+run;
+
+proc sql;
+	/* we only want monthly (R), non-seasonally adjusted (U), U.S. city average (area 
+	code 0000) series id's */
+	CREATE TABLE series_found as SELECT series_id, series_title 
+	FROM series_docs WHERE item_code IN (SELECT item_code FROM
+	item_docs_specific_first)
+	AND area_code=0000 AND periodicity_code="R" and seasonal="U";
+	/* now create a data set that contains the CPI data corresponding to the series we 
+	just found */
+	CREATE TABLE series_data as SELECT * FROM houses WHERE series_id in (SELECT
+	series_id FROM series_found)
+	AND year >= &start_year AND year <= &end_year;
+quit;
+
+/* Produce monthly data */
+data monthly_data;
+	set series_data;
+	* if period = "M01"-"M12"; * this still reads M13 observatinos - why ;
+	where period ~= "M13"; 
+	year_month = catx("_", year, period); * maybe there's a better way to label?;
+	keep year_month value;
+run;
+
+ods rtf bodytitle file=&outputfile style=htmlblue;
+title "Monthly US Housing CPI Change";
+footnote "Data: cu.data.12.USHousing.txt";
+
+proc sgplot data=monthly_data;
+	series x=year_month y=value; 
+	xaxis label = "Year and Month";
+	/* other fitpolicy options: stagger, thin, rotate, rotatethin, staggerrotate, 
+	staggerthin */
+	xaxis fitpolicy=thin; 
+	yaxis label = "CPI";
+run;
+
+ods rtf close;
