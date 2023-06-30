@@ -29,11 +29,11 @@ const Footer = ( {children} ) => {
                 <a target="_blank" href='https://github.com/sadovsd'>
                     <GithubIcon className='h-[3.5rem] w-[3.5rem] text-materialUI hover:text-neutral-950' />
                 </a>
-                <a target="_blank" href='https://medium.com/@sadovsd'>
+                <a target="_blank" href='https://medium.com/'>
                     <MediumIcon className='h-[4rem] w-[4rem] text-materialUI hover:text-neutral-950' />
                 </a>
 
-                <a target="_blank" href='https://www.youtube.com/@affilinskyy'>
+                <a target="_blank" href='https://www.youtube.com/'>
                     <YoutubeIcon className='h-[3.5rem] w-[3.5rem] text-materialUI hover:text-red-600' />
                 </a>
                 {copied && 
