@@ -44,6 +44,32 @@ h3 {
   color: #3a3c3e;
 }
 
+.header-link {
+  position: relative;
+  padding-bottom: 5px;
+  text-decoration: none;
+}
+
+.header-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #0072E5;
+  transition: width 0.3s ease-out;
+}
+
+.header-link:hover::before {
+  width: 100%;
+}
+
+.header-link.active::before {
+  width: 100%;
+}
+
 .course-list {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 400;
@@ -99,6 +125,5 @@ h3 {
   from {opacity: 0}
   to {opacity: 100}
 }
-
 
 

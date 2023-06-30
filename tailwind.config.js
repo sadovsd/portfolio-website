@@ -17,6 +17,8 @@ module.exports = {
         'bluebg4': '#D0EFFF',
         'bluebg5': '#C2E0FF',
         'bluebg6': '#E4F1FF',
+        'materialUI': '#3a3c3e',
+        'linkedIn': '#0a66c2'
       }
     },
     listStyleType: {

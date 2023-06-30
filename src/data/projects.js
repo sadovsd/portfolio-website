@@ -23,7 +23,7 @@ const PROJECTS = [
         date: 'June 2023',
         description: "This is the website you are currently visting! I built it because I wanted to have digital record of some of the labor-intensive creative and intellectual content I've produced. I believe that a visually appealing and thoughtfully designed website will always be more effective at getting ideas across than a pile of GitHub files.",
         tags: 'Frontend',
-        technologies: ['React', 'Tailwind CSS', 'React-Router'],
+        technologies: ['React', 'Tailwind CSS', 'REST API'],
         image: stoman,
         hasApp: false
     },
