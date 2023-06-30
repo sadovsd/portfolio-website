@@ -1,11 +1,3 @@
-### shit you gotta do...
-tailwind config shit
-npm install @vimeo/player
-other stuff that appears in imports ig
-
-
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

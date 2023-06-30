@@ -101,9 +101,12 @@ const Project4 = () =>  (
     <div className='container mt-20 mb-20'>
         <h1 className=''>Highlighted Projects</h1>
         <div className='flex mt-7 justify-center'>
-            <h3 className='mr-2'>Just some projects I split my</h3>
-            <h3 className='text-blue-500 mr-2'>scrotum</h3>
-            <h3>on</h3>
+            <h3 className='mr-2'>Just some</h3>
+            <h3 className='text-blue-500 mr-2'>data science</h3>
+            <h3 className='mr-2'>and</h3>
+            <h3 className='text-blue-500 mr-2'>software development</h3>
+            <h3>projects I've been working on.</h3>
+
         </div>
         <div className='mt-40 mx-10 grid grid-rows-2 items-start place-items-center grid-cols-3 gap-12'>
             {PROJECTS.map((project, id) => (
