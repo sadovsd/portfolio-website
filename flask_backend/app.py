@@ -1,19 +1,22 @@
 from flask import Flask, request, url_for, redirect, render_template
+from flask_cors import CORS
 import pandas as pd
-import pickle
-import saspy
+
+CORS(app)
 
 app = Flask(__name__)
 
 @app.route('/')
+def use_template():
+    return render_template("index.html")
 
-def index():
-    # # Initialize SAS session
-    sas = saspy.SASsession()
 
-    # read in the SAS macro from .txt file
-    with open('/Users/davydsadovskyy/react_udemy/portfolio2/flask_shit/macro.txt', 'r') as f:
-        lines = f.readlines()
-        macro = ''.join(lines)
-    return macro
+@app.route('/predict',methods=['POST','GET'])
+# obtain user input with request.form
+def predict():
+    polynomial_degree = request.form['1']
+    return render_template('result.html',pred=f'Your polynomial degree was {polynomial_degree}')
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
